@@ -9,4 +9,7 @@ public class Fight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    
+
 }
