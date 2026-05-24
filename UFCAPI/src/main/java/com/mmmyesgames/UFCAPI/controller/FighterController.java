@@ -1,0 +1,54 @@
+package com.mmmyesgames.UFCAPI.controller;
+
+import com.mmmyesgames.UFCAPI.entity.Fighter;
+import com.mmmyesgames.UFCAPI.service.FighterService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/ufc")
+public class FighterController {
+    private static final String API_KEY = "bingus";
+
+    private final FighterService fighterService;
+
+    @Autowired
+    public FighterController(FighterService fighterService) {
+        this.fighterService = fighterService;
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<Fighter> addFighter(
+            @RequestBody Fighter fighter,
+            @RequestHeader("ufc-api-key") String apiKey) {
+
+        System.out.println("Adding fighter: " + fighter.getFirstName());
+        if (apiKey == null || !apiKey.equals(API_KEY)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Fighter newFighter = fighterService.addFighter(fighter);
+        return ResponseEntity.ok(newFighter);
+    }
+
+    @GetMapping("/fighters")
+    public List<Fighter> getAllFighters() {
+        return fighterService.getAllFighters();
+    }
+
+    @GetMapping("/fighter/{id}")
+    public Fighter getFighterById(@PathVariable Long id) {
+        return fighterService.getAllFighters().get(Math.toIntExact(id));
+    }
+
+    @RequestMapping("/test")
+    public String test() {
+        return "I smash you brotha";
+    }
+
+
+
+}
