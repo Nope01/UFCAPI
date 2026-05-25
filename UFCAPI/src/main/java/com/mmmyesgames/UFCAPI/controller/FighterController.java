@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ufc")
+@RequestMapping("/ufc/fighter")
 public class FighterController {
     private static final String API_KEY = "bingus";
 
@@ -26,6 +26,7 @@ public class FighterController {
             @RequestHeader("ufc-api-key") String apiKey) {
 
         System.out.println("Adding fighter: " + fighter.getFirstName());
+
         if (apiKey == null || !apiKey.equals(API_KEY)) {
             return ResponseEntity.badRequest().build();
         }
@@ -34,14 +35,14 @@ public class FighterController {
         return ResponseEntity.ok(newFighter);
     }
 
-    @GetMapping("/fighters")
+    @GetMapping("/all")
     public List<Fighter> getAllFighters() {
         return fighterService.getAllFighters();
     }
 
-    @GetMapping("/fighter/{id}")
+    @GetMapping("/{id}")
     public Fighter getFighterById(@PathVariable Long id) {
-        return fighterService.getAllFighters().get(Math.toIntExact(id));
+        return fighterService.getFighterById(id);
     }
 
     @RequestMapping("/test")

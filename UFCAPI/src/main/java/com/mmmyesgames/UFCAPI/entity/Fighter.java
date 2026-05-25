@@ -14,24 +14,15 @@ public class Fighter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(nullable = false)
     private String firstName;
-
     @Column(nullable = false)
     private String lastName;
-
     private int wins;
-
     private int losses;
-
     private String weightClass;
-
     private String gender;
-
     private String country;
-
-    @Column(nullable = false)
     private int age;
 
 
