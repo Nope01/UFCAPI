@@ -28,8 +28,10 @@ public class FighterDao {
             Connection connection = getConnection();
 
             if (fighter.checkIfFighterExists(connection)) {
+                fighter.updateFighter(connection);
                 return null;
             }
+
             String sql = "INSERT INTO fighter (first_name, last_name) VALUES (?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 

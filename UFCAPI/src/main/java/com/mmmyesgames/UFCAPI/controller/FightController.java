@@ -3,6 +3,7 @@ package com.mmmyesgames.UFCAPI.controller;
 import com.mmmyesgames.UFCAPI.entity.Fight;
 import com.mmmyesgames.UFCAPI.entity.Fighter;
 import com.mmmyesgames.UFCAPI.service.FightService;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,6 @@ import java.util.List;
 @RequestMapping("ufc/fight")
 public class FightController {
 
-    private static final String API_KEY = "bingus";
 
     private final FightService fightService;
 
@@ -28,7 +28,11 @@ public class FightController {
             @RequestHeader("ufc-api-key") String apiKey) {
 
         System.out.println("Adding fight: " + fight.getWinner());
-        if (apiKey == null || !apiKey.equals(API_KEY)) {
+
+        Dotenv dotenv = Dotenv.load();
+        String ufcApiKey = dotenv.get("UFC_API_KEY");
+
+        if (apiKey == null || !apiKey.equals(ufcApiKey)) {
             return ResponseEntity.badRequest().build();
         }
 

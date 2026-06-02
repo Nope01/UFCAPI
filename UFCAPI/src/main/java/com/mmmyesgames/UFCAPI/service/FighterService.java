@@ -23,6 +23,12 @@ public class FighterService {
     }
 
     public List<Fighter> getAllFighters() {
-        return fighterRepository.findAll();
+        //TODO: Implement in FighterDao
+        return FighterDao.getAllFighters();
+    }
+
+    public Fighter getFighterById(Long id) {
+        //TODO: Implement in FighterDao
+        return FighterDao.getFighterById(id);
     }
 }

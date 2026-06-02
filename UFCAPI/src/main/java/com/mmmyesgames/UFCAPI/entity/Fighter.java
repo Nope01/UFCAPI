@@ -24,7 +24,62 @@ public class Fighter {
     private String gender;
     private String country;
     private int age;
+    private int ranking;
+    private boolean isChampion;
+    private boolean isActive;
 
+
+    public boolean checkIfFighterExists(Connection connection) throws SQLException {
+        String sql = "SELECT * FROM fighter WHERE first_name = ? AND last_name = ?";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, this.getFirstName());
+        preparedStatement.setString(2, this.getLastName());
+
+        ResultSet results = preparedStatement.executeQuery();
+
+        //If next exists, then the query returned a value, so that means the fighter already exists.
+        if (results.next()) {
+            System.out.println("Fighter exists already: " + results.getString(2));
+            return true;
+        }
+        else {
+            System.out.println("Fighter doesn't exist. Adding now...");
+            return false;
+        }
+    }
+
+    public boolean updateFighter(Connection connection) throws SQLException {
+        String sql = "UPDATE fighter " +
+                "SET wins = ?, " +
+                "losses = ?, " +
+                "weight_class = ?, " +
+                "gender = ?, " +
+                "country = ?, " +
+                "age = ?, " +
+                "ranking = ?, " +
+                "is_champion = ?, " +
+                "is_active = ? " +
+                "WHERE first_name = ? AND last_name = ?";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, this.getWins());
+        preparedStatement.setInt(2, this.getLosses());
+        preparedStatement.setString(3, this.getWeightClass());
+        preparedStatement.setString(4, this.getGender());
+        preparedStatement.setString(5, this.getCountry());
+        preparedStatement.setInt(6, this.getAge());
+        preparedStatement.setInt(7, this.getRanking());
+        preparedStatement.setBoolean(8, this.getIsChampion());
+        preparedStatement.setBoolean(9, this.getIsActive());
+
+        preparedStatement.setString(10, this.getFirstName());
+        preparedStatement.setString(11, this.getLastName());
+
+        System.out.println("Updating fighter: " + this.getFirstName() + " " + this.getLastName());
+        System.out.println("Rows updated: " + preparedStatement.executeUpdate());
+        return true;
+    }
 
 
     public Long getId() {
@@ -63,6 +118,12 @@ public class Fighter {
         return country;
     }
 
+    public int getRanking() { return ranking;}
+
+    public boolean getIsChampion() { return isChampion;}
+
+    public boolean getIsActive() { return isActive;}
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -99,24 +160,13 @@ public class Fighter {
         this.country = country;
     }
 
+    public void setRanking(int ranking) { this.ranking = ranking;}
 
-    public boolean checkIfFighterExists(Connection connection) throws SQLException {
-        String sql = "SELECT * FROM fighter WHERE first_name = ? AND last_name = ?";
+    public void setChampion(boolean champion) { this.isChampion = champion;}
 
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, this.getFirstName());
-        preparedStatement.setString(2, this.getLastName());
+    public void setActive(boolean active) { this.isActive = active;}
 
-        ResultSet results = preparedStatement.executeQuery();
 
-        //If next exists, then the query returned a value, so that means the fighter already exists.
-        if (results.next()) {
-            System.out.println("Fighter exists already: " + results.getString(2));
-            return true;
-        }
-        else {
-            System.out.println("Fighter doesn't exist. Adding now...");
-            return false;
-        }
-    }
+
+
 }
