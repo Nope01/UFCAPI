@@ -41,9 +41,15 @@ public class FighterController {
         return fighterService.getAllFighters();
     }
 
-    @GetMapping("/{id}")
-    public Fighter getFighterById(@PathVariable Long id) {
-        return fighterService.getFighterById(id);
+    //Clashes with /name get
+//    @GetMapping("/{id}")
+//    public Fighter getFighterById(@PathVariable Long id) {
+//        return fighterService.getFighterById(id);
+//    }
+
+    @GetMapping("/{name}")
+    public Fighter getFighterByFirstNameAndLastName(@PathVariable String name) {
+        return fighterService.getFighterByFirstNameAndLastName(name);
     }
 
     @RequestMapping("/test")

@@ -49,6 +49,8 @@ public class Fighter {
         }
     }
 
+    //TODO: assign fighter values in method
+
     public boolean updateFighter(Connection connection) throws SQLException {
         String sql = "UPDATE fighter " +
                 "SET wins = ?, " +

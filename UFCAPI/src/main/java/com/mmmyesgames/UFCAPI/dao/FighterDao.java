@@ -56,8 +56,9 @@ public class FighterDao {
 
             String sql = "SELECT * FROM fighter";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
             ResultSet fighters = preparedStatement.executeQuery();
+            connection.close();
+
             while (fighters.next()) {
                 Fighter fighter = new Fighter();
                 fighter.setId(fighters.getLong("id"));
@@ -66,12 +67,45 @@ public class FighterDao {
                 fighterList.add(fighter);
             }
 
-            connection.close();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
         return fighterList;
+    }
+
+    public static Fighter getFighterByFirstNameAndLastName(String name) {
+        try {
+            Connection connection = getConnection();
+
+            String[] nameParts = name.split("-");
+            String firstName = nameParts[0];
+            String lastName = nameParts[1];
+            String sql = "SELECT * FROM fighter WHERE first_name = ? AND last_name = ?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            ResultSet fighterResult = preparedStatement.executeQuery();
+            connection.close();
+
+            if (!fighterResult.next()) {
+                return null;
+            }
+            else {
+                Fighter fighter = new Fighter();
+                fighter.setId(fighterResult.getLong("id"));
+                fighter.setFirstName(fighterResult.getString("first_name"));
+                fighter.setLastName(fighterResult.getString("last_name"));
+                fighter.setWins(fighterResult.getInt("wins"));
+                fighter.setLosses(fighterResult.getInt("losses"));
+                return fighter;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static Fighter getFighterById(Long id) {

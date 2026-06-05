@@ -27,6 +27,10 @@ public class FighterService {
         return FighterDao.getAllFighters();
     }
 
+    public Fighter getFighterByFirstNameAndLastName(String name) {
+        return FighterDao.getFighterByFirstNameAndLastName(name);
+    }
+
     public Fighter getFighterById(Long id) {
         //TODO: Implement in FighterDao
         return FighterDao.getFighterById(id);
