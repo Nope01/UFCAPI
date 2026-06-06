@@ -29,6 +29,7 @@ public class FighterDao {
 
             if (fighter.checkIfFighterExists(connection)) {
                 fighter.updateFighter(connection);
+                connection.close();
                 return null;
             }
 
@@ -61,9 +62,7 @@ public class FighterDao {
 
             while (fighters.next()) {
                 Fighter fighter = new Fighter();
-                fighter.setId(fighters.getLong("id"));
-                fighter.setFirstName(fighters.getString("first_name"));
-                fighter.setLastName(fighters.getString("last_name"));
+                fighter.populateFighter(fighters);
                 fighterList.add(fighter);
             }
 
@@ -95,11 +94,7 @@ public class FighterDao {
             }
             else {
                 Fighter fighter = new Fighter();
-                fighter.setId(fighterResult.getLong("id"));
-                fighter.setFirstName(fighterResult.getString("first_name"));
-                fighter.setLastName(fighterResult.getString("last_name"));
-                fighter.setWins(fighterResult.getInt("wins"));
-                fighter.setLosses(fighterResult.getInt("losses"));
+                fighter.populateFighter(fighterResult);
                 return fighter;
             }
 
@@ -125,9 +120,7 @@ public class FighterDao {
             }
             else {
                 Fighter fighter = new Fighter();
-                fighter.setId(fighterResult.getLong("id"));
-                fighter.setFirstName(fighterResult.getString("first_name"));
-                fighter.setLastName(fighterResult.getString("last_name"));
+                fighter.populateFighter(fighterResult);
                 return fighter;
             }
 

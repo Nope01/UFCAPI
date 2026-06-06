@@ -49,8 +49,24 @@ public class Fighter {
         }
     }
 
-    //TODO: assign fighter values in method
+    //TODO: add fighter tier to db and program
+    //TODO: add fighters in our list to db
+    //TODO: get fighters each person has picked
 
+
+    public void populateFighter(ResultSet fighterResult) throws SQLException {
+        this.setId(fighterResult.getLong("id"));
+        this.setFirstName(fighterResult.getString("first_name"));
+        this.setLastName(fighterResult.getString("last_name"));
+        this.setWins(fighterResult.getInt("wins"));
+        this.setLosses(fighterResult.getInt("losses"));
+        this.setWeightClass(fighterResult.getString("weight_class"));
+        this.setGender(fighterResult.getString("gender"));
+        this.setCountry(fighterResult.getString("country"));
+        this.setRanking(fighterResult.getInt("ranking"));
+        this.setChampion(fighterResult.getBoolean("is_champion"));
+        this.setActive(fighterResult.getBoolean("is_active"));
+    }
     public boolean updateFighter(Connection connection) throws SQLException {
         String sql = "UPDATE fighter " +
                 "SET wins = ?, " +

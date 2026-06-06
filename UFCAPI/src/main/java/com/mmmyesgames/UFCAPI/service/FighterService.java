@@ -23,7 +23,6 @@ public class FighterService {
     }
 
     public List<Fighter> getAllFighters() {
-        //TODO: Implement in FighterDao
         return FighterDao.getAllFighters();
     }
 
@@ -32,7 +31,6 @@ public class FighterService {
     }
 
     public Fighter getFighterById(Long id) {
-        //TODO: Implement in FighterDao
         return FighterDao.getFighterById(id);
     }
 }
