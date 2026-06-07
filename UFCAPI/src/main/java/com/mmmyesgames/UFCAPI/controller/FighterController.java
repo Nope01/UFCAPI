@@ -52,6 +52,11 @@ public class FighterController {
         return fighterService.getFighterByFirstNameAndLastName(name);
     }
 
+    @GetMapping("/player/{name}")
+    public List<Fighter> getFightersByPlayerName(@PathVariable String name) {
+        return fighterService.getFightersByPlayerName(name);
+    }
+
     @RequestMapping("/test")
     public String test() {
         return "I smash you brotha";

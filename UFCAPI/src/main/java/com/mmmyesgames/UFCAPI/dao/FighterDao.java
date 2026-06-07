@@ -30,6 +30,7 @@ public class FighterDao {
             if (fighter.checkIfFighterExists(connection)) {
                 fighter.updateFighter(connection);
                 connection.close();
+
                 return null;
             }
 
@@ -97,6 +98,49 @@ public class FighterDao {
                 fighter.populateFighter(fighterResult);
                 return fighter;
             }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static List<Fighter> getFightersByPlayerName(String firstName) {
+        try {
+            //Get id for name, then all fighters belonging to that id
+            Connection connection = getConnection();
+            String idSql = "SELECT id FROM player WHERE first_name = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(idSql);
+            preparedStatement.setString(1, firstName);
+            ResultSet playerIdResult = preparedStatement.executeQuery();
+
+            if (!playerIdResult.next()) {
+                return null;
+            }
+            else {
+                long playerId = playerIdResult.getLong(1);
+                String fightersSql = "SELECT * FROM fighter WHERE picked_by = ?";
+                PreparedStatement preparedStatement2 = connection.prepareStatement(fightersSql);
+                preparedStatement2.setLong(1, playerId);
+                ResultSet fighterResult = preparedStatement2.executeQuery();
+
+                connection.close();
+
+                if (!fighterResult.next()) {
+                    return null;
+                }
+                else {
+                    List<Fighter> fighterList = new ArrayList<>();
+
+                    while (fighterResult.next()) {
+                        Fighter fighter = new Fighter();
+                        fighter.populateFighter(fighterResult);
+                        fighterList.add(fighter);
+                    }
+                    return fighterList;
+                }
+            }
+
+
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

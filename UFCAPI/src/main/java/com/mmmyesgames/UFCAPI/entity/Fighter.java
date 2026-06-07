@@ -27,6 +27,7 @@ public class Fighter {
     private int ranking;
     private boolean isChampion;
     private boolean isActive;
+    private String imageLink;
 
 
     public boolean checkIfFighterExists(Connection connection) throws SQLException {
@@ -66,6 +67,7 @@ public class Fighter {
         this.setRanking(fighterResult.getInt("ranking"));
         this.setChampion(fighterResult.getBoolean("is_champion"));
         this.setActive(fighterResult.getBoolean("is_active"));
+        this.setImageLink(fighterResult.getString("image_link"));
     }
     public boolean updateFighter(Connection connection) throws SQLException {
         String sql = "UPDATE fighter " +
@@ -77,7 +79,8 @@ public class Fighter {
                 "age = ?, " +
                 "ranking = ?, " +
                 "is_champion = ?, " +
-                "is_active = ? " +
+                "is_active = ?, " +
+                "image_link = ? " +
                 "WHERE first_name = ? AND last_name = ?";
 
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -90,9 +93,10 @@ public class Fighter {
         preparedStatement.setInt(7, this.getRanking());
         preparedStatement.setBoolean(8, this.getIsChampion());
         preparedStatement.setBoolean(9, this.getIsActive());
+        preparedStatement.setString(10, this.getImageLink());
 
-        preparedStatement.setString(10, this.getFirstName());
-        preparedStatement.setString(11, this.getLastName());
+        preparedStatement.setString(11, this.getFirstName());
+        preparedStatement.setString(12, this.getLastName());
 
         System.out.println("Updating fighter: " + this.getFirstName() + " " + this.getLastName());
         System.out.println("Rows updated: " + preparedStatement.executeUpdate());
@@ -141,6 +145,7 @@ public class Fighter {
     public boolean getIsChampion() { return isChampion;}
 
     public boolean getIsActive() { return isActive;}
+    public String getImageLink() { return imageLink;}
 
     public void setId(Long id) {
         this.id = id;
@@ -183,6 +188,8 @@ public class Fighter {
     public void setChampion(boolean champion) { this.isChampion = champion;}
 
     public void setActive(boolean active) { this.isActive = active;}
+
+    public void setImageLink(String imageLink) { this.imageLink = imageLink;}
 
 
 
