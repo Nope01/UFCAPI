@@ -1,6 +1,7 @@
 package com.mmmyesgames.UFCAPI.dao;
 
 import com.mmmyesgames.UFCAPI.entity.Fighter;
+import io.github.cdimascio.dotenv.Dotenv;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -8,15 +9,15 @@ import java.util.List;
 
 public class FighterDao {
 
-    public static final String jdbcUrl = "jdbc:postgresql://192.168.0.18:5432/ufc";
-    public static final String username = "postgres";
-    public static final String password = "nope";
-
-
     //Shared connection method for all queries
     public static Connection getConnection() {
         try {
-            return DriverManager.getConnection(jdbcUrl, username, password);
+            Dotenv dotenv = Dotenv.load();
+            String dbUrl = dotenv.get("DB_URL");
+            String dbUsername = dotenv.get("DB_USERNAME");
+            String dbPassword = dotenv.get("DB_PASSWORD");
+
+            return DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
