@@ -1,0 +1,29 @@
+services:
+  api:
+    build: .
+    container_name: ufcapi
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+    environment:
+      DB_HOST: localhost
+      DB_PORT: 5432
+      DB_NAME: ufcapi
+      DB_USER: postgres
+      DB_PASSWORD: nope42069
+
+#  db:
+#    image: postgres:17
+#
+#    container_name: my-postgres
+#
+#    restart: unless-stopped
+#
+#    environment:
+#      POSTGRES_DB: mydb
+#      POSTGRES_USER: myuser
+#      POSTGRES_PASSWORD: mypassword
+#
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
