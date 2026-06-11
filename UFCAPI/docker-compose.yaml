@@ -6,10 +6,13 @@ services:
       - "8080:8080"
     restart: unless-stopped
 
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
     environment:
-      DB_HOST: localhost
+      DB_HOST: host.docker.internal
       DB_PORT: 5432
-      DB_NAME: ufcapi
+      DB_NAME: ufc
       DB_USER: postgres
       DB_PASSWORD: nope42069
 
