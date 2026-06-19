@@ -10,58 +10,41 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ufc/fighter")
+@RequestMapping("ufc")
 public class FighterController {
-    private final FighterService fighterService;
 
     @Autowired
-    public FighterController(FighterService fighterService) {
-        this.fighterService = fighterService;
+    private FighterService fighterService;
+    @PostMapping("/fighter")
+    public Fighter saveFighter(@RequestBody Fighter fighter) {
+        return fighterService.addFighter(fighter);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Fighter> addFighter(
-            @RequestBody Fighter fighter,
-            @RequestHeader("ufc-api-key") String apiKey) {
-
-        Dotenv dotenv = Dotenv.load();
-        String ufcApiKey = dotenv.get("UFC_API_KEY");
-
-        System.out.println("Adding fighter: " + fighter.getFirstName());
-        if (apiKey == null || !apiKey.equals(ufcApiKey)) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        Fighter newFighter = fighterService.addFighter(fighter);
-        return ResponseEntity.ok(newFighter);
-    }
-
-    @GetMapping("/all")
+    @GetMapping("/fighter")
     public List<Fighter> getAllFighters() {
         return fighterService.getAllFighters();
     }
 
-    //Clashes with /name get
-//    @GetMapping("/{id}")
-//    public Fighter getFighterById(@PathVariable Long id) {
-//        return fighterService.getFighterById(id);
+    @GetMapping("/fighter/{id}")
+    public ResponseEntity<?> getFighterById(@PathVariable Integer id) {
+        Fighter fighter = fighterService.getFighterById(id);
+
+        if (fighter == null) {
+            // This will print explicitly in your browser if the database search fails
+            return ResponseEntity.status(404).body("Error: Fighter with ID " + id + " was not found in the database.");
+        }
+
+        return ResponseEntity.ok(fighter);
+    }
+
+//    @PutMapping("/fighter/{id}")
+//    public Fighter updateFighter(@PathVariable Long id, @RequestBody Fighter fighter) {
+//        return fighterService.updateFighter(id, fighter);
 //    }
 
-    @GetMapping("/{name}")
-    public Fighter getFighterByFirstNameAndLastName(@PathVariable String name) {
-        return fighterService.getFighterByFirstNameAndLastName(name);
+    @DeleteMapping("/fighter/{id}")
+    public void deleteFighter(@PathVariable Integer id) {
+        fighterService.deleteFighter(id);
     }
-
-    @GetMapping("/player/{name}")
-    public List<Fighter> getFightersByPlayerName(@PathVariable String name) {
-        return fighterService.getFightersByPlayerName(name);
-    }
-
-    @RequestMapping("/test")
-    public String test() {
-        return "I smash you brotha";
-    }
-
-
 
 }
