@@ -10,7 +10,7 @@ import java.util.Objects;
 
 
 @Service
-public class FighterServiceImpl implements FighterService{
+public class FighterServiceImpl implements FighterService {
 
     @Autowired
     private FighterRepository fighterRepository;
@@ -54,6 +54,6 @@ public class FighterServiceImpl implements FighterService{
 
     @Override
     public List<Fighter> getFightersByPlayerName(String name) {
-        return List.of();
+        return fighterRepository.findByPickedByFirstName(name);
     }
 }

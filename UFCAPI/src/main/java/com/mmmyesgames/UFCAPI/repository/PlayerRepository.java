@@ -1,0 +1,17 @@
+package com.mmmyesgames.UFCAPI.repository;
+
+import com.mmmyesgames.UFCAPI.entity.Player;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface PlayerRepository extends JpaRepository<Player, Integer> {
+
+
+    @Query("select p from Player p where p.firstName = ?1")
+    Player findByFirstName(String firstName);
+
+    @Query("select p from Player p where p.lastName = ?1")
+    Player findByLastName(String lastName);
+}

@@ -1,23 +1,29 @@
 package com.mmmyesgames.UFCAPI.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "fighters")
+@Builder
 @Table(name = "player")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Player {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(nullable = false)
-    private Long id;
+    private Integer id;
+
     private String firstName;
     private String lastName;
     private int score;
 
-
+    @OneToMany(mappedBy = "pickedBy")
+    @JsonManagedReference
+    private List<Fighter> fighters;
 }

@@ -37,6 +37,11 @@ public class FighterController {
         return ResponseEntity.ok(fighter);
     }
 
+    @GetMapping("/fighter/player/{name}")
+    public List<Fighter> getFightersByPlayerName(@PathVariable String name) {
+        return fighterService.getFightersByPlayerName(name);
+    }
+
 //    @PutMapping("/fighter/{id}")
 //    public Fighter updateFighter(@PathVariable Long id, @RequestBody Fighter fighter) {
 //        return fighterService.updateFighter(id, fighter);

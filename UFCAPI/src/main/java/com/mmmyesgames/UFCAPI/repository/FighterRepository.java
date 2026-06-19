@@ -14,5 +14,9 @@ public interface FighterRepository extends JpaRepository<Fighter, Integer> {
     Fighter findByFirstNameAndLastName(String firstName, String lastName);
 
     @Query("select f from Fighter f where f.pickedBy = ?1")
-    List<Fighter> findByPickedBy(Long playerId);
+    List<Fighter> findByPickedBy(Integer playerId);
+
+    @Query("select f from Fighter f where f.pickedBy.firstName = ?1")
+    List<Fighter> findByPickedByFirstName(String firstName);
+    List<Fighter> findByPickedByFirstNameAndLastName(String firstName, String lastName);
 }

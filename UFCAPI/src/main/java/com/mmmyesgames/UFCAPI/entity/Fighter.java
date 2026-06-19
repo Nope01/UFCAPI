@@ -1,5 +1,6 @@
 package com.mmmyesgames.UFCAPI.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,7 +15,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "pickedBy")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -22,7 +23,6 @@ import java.util.Objects;
 public class Fighter {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "first_name", nullable = false)
@@ -64,9 +64,11 @@ public class Fighter {
     @Builder.Default
     private boolean isActive = true;
 
-    @Column(name = "picked_by")
-    @Builder.Default
-    private int pickedBy = 0;
+    //Default removed
+    @JoinColumn(name = "picked_by")
+    @ManyToOne
+    @JsonBackReference
+    private Player pickedBy;
 
     @Column(name = "image_link")
     @Builder.Default
