@@ -12,4 +12,5 @@ public interface FighterService {
     void deleteFighter(Integer id);
     List<Fighter> getAllFighters();
     List<Fighter> getFightersByPlayerName(String name);
+    List<Fighter> getFightersByPlayerId(Integer id);
 }

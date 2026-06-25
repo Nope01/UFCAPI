@@ -42,6 +42,13 @@ public class FighterController {
         return fighterService.getFightersByPlayerName(name);
     }
 
+
+    @GetMapping("/fighters/player/{id}")
+    public List<Fighter> getFightersByPlayerId(@PathVariable Integer id) {
+        return fighterService.getFightersByPlayerId(id);
+    }
+
+
 //    @PutMapping("/fighter/{id}")
 //    public Fighter updateFighter(@PathVariable Long id, @RequestBody Fighter fighter) {
 //        return fighterService.updateFighter(id, fighter);

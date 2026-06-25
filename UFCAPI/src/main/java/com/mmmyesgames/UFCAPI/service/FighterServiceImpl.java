@@ -56,4 +56,9 @@ public class FighterServiceImpl implements FighterService {
     public List<Fighter> getFightersByPlayerName(String name) {
         return fighterRepository.findByPickedByFirstName(name);
     }
+
+    @Override
+    public List<Fighter> getFightersByPlayerId(Integer id) {
+        return fighterRepository.findByPickedById(id);
+    }
 }

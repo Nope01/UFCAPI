@@ -29,6 +29,11 @@ public class PlayerController {
         return playerService.getPlayerById(id);
     }
 
+    @GetMapping("/player/{id}/fighters")
+    public List<Player> getFightersByPlayerId(@PathVariable Integer id) {
+        return playerService.getAllPlayers();
+    }
+
     @DeleteMapping("player/{id}")
     public void deletePlayer(@PathVariable Integer id) {
         playerService.deletePlayer(id);
