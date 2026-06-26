@@ -17,6 +17,9 @@ public class FighterServiceImpl implements FighterService {
 
     @Override
     public Fighter addFighter(Fighter fighter) {
+        try { fighterRepository.saveAndFlush(fighter);
+        } catch (Exception e) {
+            return null; }
         return fighterRepository.save(fighter);
     }
 

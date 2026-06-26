@@ -23,12 +23,12 @@ import java.util.Objects;
 public class Fighter {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
     @Builder.Default
     private String lastName = "Bingus";
 
