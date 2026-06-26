@@ -1,6 +1,7 @@
 package com.mmmyesgames.UFCAPI.controller;
 
 import com.mmmyesgames.UFCAPI.entity.Player;
+import com.mmmyesgames.UFCAPI.projection.PlayerProjection;
 import com.mmmyesgames.UFCAPI.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +38,11 @@ public class PlayerController {
     @DeleteMapping("player/{id}")
     public void deletePlayer(@PathVariable Integer id) {
         playerService.deletePlayer(id);
+    }
+
+    @GetMapping("/players/scoreboard")
+    public List<PlayerProjection> getPlayersByScoreDescending() {
+        return playerService.getPlayersByScoreDescending();
     }
 
 
