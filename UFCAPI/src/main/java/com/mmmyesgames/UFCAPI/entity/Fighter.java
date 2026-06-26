@@ -73,4 +73,7 @@ public class Fighter {
     @Column(name = "image_link")
     @Builder.Default
     private String imageLink = "https://i.imgur.com/0000000.png";
+
+    @Builder.Default
+    private String category = "F";
 }
