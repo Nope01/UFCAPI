@@ -45,5 +45,8 @@ public class PlayerController {
         return playerService.getPlayersByScoreDescending();
     }
 
-
+    @PostMapping("/player/{id}/score/{score}")
+    public int updatePlayerScore(@PathVariable Integer id, @PathVariable int score) {
+        return playerService.updatePlayerScore(id, score);
+    }
 }

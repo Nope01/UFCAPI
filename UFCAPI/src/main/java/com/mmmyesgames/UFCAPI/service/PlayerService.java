@@ -13,6 +13,8 @@ public interface PlayerService {
     Player getPlayerByLastName(String lastName);
     Player updatePlayer(Integer id, Player player);
     List<PlayerProjection> getPlayersByScoreDescending();
+    int getPlayerScore(Integer id);
+    int updatePlayerScore(Integer id, int score);
     void deletePlayer(Integer id);
 
 }

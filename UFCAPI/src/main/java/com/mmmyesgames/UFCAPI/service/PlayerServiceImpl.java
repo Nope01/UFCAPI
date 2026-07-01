@@ -50,6 +50,16 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
+    public int getPlayerScore(Integer id) {
+        return playerRepository.findById(id).orElse(null).getScore();
+    }
+
+    @Override
+    public int updatePlayerScore(Integer id, int score) {
+        return playerRepository.updateScoreById(score, id);
+    }
+
+    @Override
     public void deletePlayer(Integer id) {
         playerRepository.deleteById(id);
     }
