@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Player {
     @Id
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private Integer id;
 
     private String firstName;

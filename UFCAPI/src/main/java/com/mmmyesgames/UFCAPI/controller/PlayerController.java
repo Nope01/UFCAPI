@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("ufc")
+@RequestMapping("ufc/auth")
 public class PlayerController {
 
     @Autowired
