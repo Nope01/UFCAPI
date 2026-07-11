@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -91,5 +92,23 @@ public class AuthController {
                     .status(HttpStatus.UNAUTHORIZED)
                     .body("Invalid username or password");
         }
+    }
+
+    @GetMapping("/csrf")
+    public CsrfToken csrf(CsrfToken token) {
+        return token;
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> me(Authentication authentication) {
+        if (authentication == null) {
+            return ResponseEntity.status(401).body("Not authenticated");
+        }
+
+        return ResponseEntity.ok(
+                "username=" + authentication.getName()
+                        + ", authenticated=" + authentication.isAuthenticated()
+                        + ", authorities=" + authentication.getAuthorities()
+        );
     }
 }
