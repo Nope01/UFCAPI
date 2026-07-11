@@ -30,6 +30,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                        .ignoringRequestMatchers("/ufc/auth/login", "/ufc/auth/signup")
                 )
 //                .csrf (AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
