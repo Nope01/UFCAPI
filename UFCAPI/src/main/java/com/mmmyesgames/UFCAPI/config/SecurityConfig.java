@@ -31,26 +31,27 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .cors(cors -> {})
+
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         .ignoringRequestMatchers(
                                 "/ufc/auth/login",
                                 "/ufc/auth/signup",
-                                "/ufc/auth/logout"          // <-- add this
+                                "/ufc/auth/logout"
                         )
                 )
 //                .csrf (AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/ufc/auth/**").permitAll()
                         .requestMatchers("/ufc/**").authenticated()
-                        .requestMatchers("/ufc/auth/csrf").permitAll()
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/ufc/auth/logout") //TODO: make logout url be /ufc/auth/logout
+                        .logoutUrl("/ufc/auth/logout")
                         .logoutSuccessHandler((request, response, authentication) -> {
                             response.setStatus(200);
                         })
