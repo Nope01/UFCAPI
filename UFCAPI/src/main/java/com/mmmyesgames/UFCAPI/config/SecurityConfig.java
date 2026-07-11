@@ -30,21 +30,20 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        CookieCsrfTokenRepository csrfTokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
-        csrfTokenRepository.setCookieCustomizer(cookie -> cookie
-                .domain(".fantasyufc.site")
-                .path("/")
-                .sameSite("Lax")
-                .secure(true));
         http
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                        .ignoringRequestMatchers("/ufc/auth/login", "/ufc/auth/signup")
+                        .ignoringRequestMatchers(
+                                "/ufc/auth/login",
+                                "/ufc/auth/signup",
+                                "/ufc/auth/logout"          // <-- add this
+                        )
                 )
 //                .csrf (AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/ufc/auth/**").permitAll()
                         .requestMatchers("/ufc/**").authenticated()
+                        .requestMatchers("/ufc/auth/csrf").permitAll()
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session
