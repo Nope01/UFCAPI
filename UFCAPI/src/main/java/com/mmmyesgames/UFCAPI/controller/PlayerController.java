@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("ufc/auth")
+@RequestMapping("ufc")
 public class PlayerController {
 
     @Autowired
@@ -20,17 +20,17 @@ public class PlayerController {
         return playerService.addPlayer(player);
     }
 
-    @GetMapping("/player")
+    @GetMapping("auth/player")
     public List<Player> getAllPlayers() {
         return playerService.getAllPlayers();
     }
 
-    @GetMapping("/player/{id}")
+    @GetMapping("auth/player/{id}")
     public Player getPlayerById(@RequestParam Integer id) {
         return playerService.getPlayerById(id);
     }
 
-    @GetMapping("/player/{id}/fighters")
+    @GetMapping("auth/player/{id}/fighters")
     public List<Player> getFightersByPlayerId(@PathVariable Integer id) {
         return playerService.getAllPlayers();
     }
@@ -40,7 +40,7 @@ public class PlayerController {
         playerService.deletePlayer(id);
     }
 
-    @GetMapping("/players/scoreboard")
+    @GetMapping("auth/players/scoreboard")
     public List<PlayerProjection> getPlayersByScoreDescending() {
         return playerService.getPlayersByScoreDescending();
     }
