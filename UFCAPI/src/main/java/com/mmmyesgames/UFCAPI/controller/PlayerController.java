@@ -21,27 +21,27 @@ public class PlayerController {
         return playerService.addPlayer(player);
     }
 
-    @GetMapping("auth/player")
+    @GetMapping("/player")
     public List<Player> getAllPlayers() {
         return playerService.getAllPlayers();
     }
 
-    @GetMapping("auth/player/{id}")
+    @GetMapping("/player/{id}")
     public Player getPlayerById(@RequestParam Integer id) {
         return playerService.getPlayerById(id);
     }
 
-    @GetMapping("auth/player/{id}/fighters")
+    @GetMapping("/player/{id}/fighters")
     public List<Player> getFightersByPlayerId(@PathVariable Integer id) {
         return playerService.getAllPlayers();
     }
 
-    @DeleteMapping("player/{id}")
+    @DeleteMapping("/player/{id}")
     public void deletePlayer(@PathVariable Integer id) {
         playerService.deletePlayer(id);
     }
 
-    @GetMapping("auth/players/scoreboard")
+    @GetMapping("/players/scoreboard")
     public List<PlayerProjection> getPlayersByScoreDescending() {
         return playerService.getPlayersByScoreDescending();
     }

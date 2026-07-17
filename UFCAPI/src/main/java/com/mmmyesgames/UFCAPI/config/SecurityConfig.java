@@ -1,9 +1,11 @@
 package com.mmmyesgames.UFCAPI.config;
 
 import com.mmmyesgames.UFCAPI.service.UserServiceImpl;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -45,8 +47,19 @@ public class SecurityConfig {
                 )
 //                .csrf (AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/ufc/auth/login",
+                                "/ufc/auth/signup"
+                        ).permitAll()
+
                         .requestMatchers("/ufc/auth/**").permitAll()
-                        .requestMatchers("/ufc/**").authenticated()
+
+                        .requestMatchers(HttpMethod.OPTIONS, "/**")
+                        .permitAll()
+
+                        .requestMatchers("/ufc/**")
+                        .authenticated()
+
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session
@@ -55,8 +68,9 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .logoutUrl("/ufc/auth/logout")
                         .logoutSuccessHandler((request, response, authentication) -> {
-                            response.setStatus(200);
+                            response.setStatus(HttpServletResponse.SC_OK);
                         })
+                        .clearAuthentication(true)
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                 );

@@ -72,11 +72,10 @@ public class AuthController {
                             )
                     );
 
-            SecurityContext context =
-                    SecurityContextHolder.createEmptyContext();
+            httpRequest.getSession(true);
 
+            SecurityContext context = SecurityContextHolder.createEmptyContext();
             context.setAuthentication(authentication);
-
             SecurityContextHolder.setContext(context);
 
             securityContextRepository.saveContext(
@@ -85,11 +84,12 @@ public class AuthController {
                     httpResponse
             );
 
+            System.out.println("Session ID: " + httpRequest.getSession().getId());
+
             return ResponseEntity.ok("Login successful!");
 
         } catch (AuthenticationException e) {
-            return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Invalid username or password");
         }
     }
@@ -102,13 +102,14 @@ public class AuthController {
     @GetMapping("/me")
     public ResponseEntity<?> me(Authentication authentication) {
         if (authentication == null) {
-            return ResponseEntity.status(401).body("Not authenticated");
+            return ResponseEntity.status(401).body("Not logged in");
         }
-
         return ResponseEntity.ok(
                 "username=" + authentication.getName()
                         + ", authenticated=" + authentication.isAuthenticated()
                         + ", authorities=" + authentication.getAuthorities()
         );
     }
+
+    //TODO: Edit existing accounts
 }
